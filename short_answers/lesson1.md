@@ -2,14 +2,14 @@
 
 ## Question 1: How many users do we have? 
 Answer: 130 Users. 
-```
+```sql
 select count(distinct user_id)
 from dbt_olivia_r.stg_users;
 ```
 
 ## Question 2: On average, how many orders do we receive per hour?
 Answer: 7.52
-```
+```sql
 with base as (
 
 select 
@@ -26,7 +26,7 @@ from base;
 
 ## Question 3: On average, how long does an order take from being placed to being delivered?
 Answer: 3.89 days 
-```
+```sql
 select 
     round(
     avg(
@@ -42,7 +42,7 @@ Answer:
 1 order - 25 users 
 2 orders - 28 users
 3+ orders - 71 users
-```
+```sql
 with base as (
     select 
         user_id
@@ -62,7 +62,7 @@ group by 1
 ```
 
 * Question 5: On average, how many unique sessions do we have per hour?
-```
+```sql
 with base as (
     select 
         date_trunc('hour', created_at_utc) as hr 
@@ -89,4 +89,4 @@ from base;
 The most challenging part was understanding the different components of a dbt project (schema.yml, source.yml, etc), how they fit together, and what is mandatory for a project to run vs just recommended. 
 
 * Is there anywhere you are still stuck or confused? Or Is there a particular part of the project where you want focused feedback from your reviewers?
-I added documentation to the src_postgres.yml file, which I think was helpful for me in exploring the data, but I didn't document every column, since some columns felt self explanatory. I also wasn't sure of what needed to be added in the schema.yml file.  
+I added documentation to the src_postgres.yml file, which I think was helpful for me in exploring the data, but I didn't document every column, since some columns felt self explanatory. I also wasn't sure of what needed to be added in the schema.yml file. If I wrote tests on the source data and had very minimal changes in the staging models, should I also include tests for the models?  
