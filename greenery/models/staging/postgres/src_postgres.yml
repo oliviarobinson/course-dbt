@@ -1,0 +1,105 @@
+version: 2
+
+sources:
+
+  - name: postgres # name of the source 
+    schema: public # this is the schema our raw data lives in
+    database: dbt # this is the name of our database
+    description: > 
+      This is the data from the greenery webstore, which our software team has stored in a postgres database. 
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    freshness:
+      warn_after: {count: 24, period: hour}
+      error_after: {count: 48, period: hour}
+
+    tables:
+      - name: users 
+        loaded_at_field: updated_at
+        description: >
+          Each row represents one user. 
+          Contains name, phone, and email. 
+          One user can connect to multiple rows in the addresses, orders, and events tables. 
+        columns: 
+          - name: user_id 
+            description: Primary Key
+            tests: 
+              - unique 
+              - not_null 
+
+      - name: addresses 
+        description: >
+          Each row represents one address affiliated with users and orders. 
+          Users can have multiple addresses, but each order can only have one address.
+        columns: 
+          - name: address_id 
+            description: Primary Key
+            tests: 
+              - unique 
+              - not_null 
+
+
+      - name: events 
+        loaded_at_field: created_at
+        description: >
+          Describes user browsing behavior on website, such as viewing a page or adding a product to cart. 
+          Links to users, orders, and products. 
+        columns: 
+          - name: event_id 
+            description: Primary Key
+            tests: 
+              - unique 
+              - not_null 
+          - name: event_type
+            description: One of "add_to_cart", "checkout", "package_shipped", "page_view".
+
+      - name: products 
+        description: > 
+          Tracks products sold in the greenery store, incl. price and inventory. 
+          Links to order_items table. 
+        columns:  
+          - name: product_id 
+            description: Primary Key
+            tests: 
+              - unique 
+              - not_null 
+
+      - name: orders 
+        loaded_at_field: created_at
+        description: > 
+          Each row is one order, includes data on cost, shipping, delivery status, etc. 
+        columns:  
+          - name: order_id 
+            description: Primary Key
+            tests: 
+              - unique 
+              - not_null 
+          - name: status  
+            description: One of "delivered", "preparing", "shipped".
+
+      - name: order_items
+        description: > 
+          Connects to order table, since each order can include multiple products. No unique id in this table. 
+        columns:  
+          - name: order_id 
+            description: Connects to orders table, NOT unique. 
+            tests: 
+              - not_null 
+          - name: product_id 
+            description: Primary Key
+            tests: 
+              - not_null 
+
+      - name: promos
+        description: > 
+          Small table, tracks promotions (discounts) on the site. Each row is one promo code. 
+        columns:  
+          - name: promo_id 
+            description: Primary Key
+            tests: 
+              - unique 
+              - not_null 
