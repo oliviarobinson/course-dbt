@@ -1,5 +1,5 @@
 select 
     promo_id
-    , discount
-    , status
+    , discount as promo_discount
+    , status as promo_status
 from {{ source('postgres', 'promos') }}

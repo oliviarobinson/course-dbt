@@ -1,0 +1,12 @@
+version: 2
+
+models:
+
+  - name: dim_products
+  - name: dim_users
+
+  - name: int_orders_delivery_times
+  
+  - name: fact_orders
+  - name: fact_order_addresses
+  - name: fact_user_orders
