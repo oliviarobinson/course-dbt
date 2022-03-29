@@ -6,6 +6,7 @@ models:
   - name: dim_users
 
   - name: int_orders_delivery_times
+  - name: int_order_items
   
   - name: fact_orders
   - name: fact_order_addresses

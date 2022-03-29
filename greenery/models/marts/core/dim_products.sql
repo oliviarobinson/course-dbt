@@ -7,7 +7,7 @@ with products as (
 
 select 
   product_id
-  , name
+  , product_name
   , price_usd
   , inventory
 from products

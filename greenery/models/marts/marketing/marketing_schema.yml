@@ -1,6 +1,6 @@
-# version: 2
+version: 2
 
-# models:
+models:
 
-#   - name: fact_promo_usage
+  - name: fact_promo_usage
   
