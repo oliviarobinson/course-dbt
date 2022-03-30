@@ -3,4 +3,9 @@ version: 2
 models:
 
   - name: fact_promo_usage
+    columns: 
+      - name: promo_id 
+        tests:
+          - unique
+          - not_null 
   
