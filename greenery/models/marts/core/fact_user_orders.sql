@@ -12,13 +12,13 @@ with orders as (
     , last_name 
     , email
     , phone_number  
-    , count(distinct order_id) as num_orders
+    , count(distinct order_id) as n_orders
     , case when count(distinct order_id) > 1 
       then 1 else 0 
       end as is_repeat_customer
     , min(created_at_utc) as first_order_date 
     , max(created_at_utc) as latest_order_date
-    , sum(used_promo) as num_promos_used
+    , sum(used_promo) as n_promos_used
   from orders
   {{ dbt_utils.group_by(n=5) }}
 )
