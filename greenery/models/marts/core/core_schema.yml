@@ -3,11 +3,115 @@ version: 2
 models:
 
   - name: dim_products
+    columns:
+      - name: product_id 
+        tests:
+          - not_null
+          - unique  
+      
+      - name: product_name 
+        tests:
+          - not_null
+      
+      - name: price_usd 
+        tests:
+          - not_null
+          - positive_values   
+      
+      - name: inventory 
+        tests:
+          - not_null
+          - positive_values
+
   - name: dim_users
+    columns:
+    - name: user_id
+      tests: 
+        - unique
+        - not_null
+
+  - name: int_order_items
+    description: Joins order_items table with product name information.  
 
   - name: int_orders_delivery_times
-  - name: int_order_items
+    description: Calculates the time for delivery. 
+
+  - name: int_orders 
+    description: Joins data from various staging and intermediate models.  
   
   - name: fact_orders
-  - name: fact_order_addresses
+    description: > 
+      Table where each row represents one order.
+    columns:
+      - name: order_id
+        description: Unique ID
+        tests: 
+          - unique
+          - not_null
+
+      - name: user_id
+        description: ID of the user who made the purchase. 
+        tests: 
+          - not_null
+
+      - name: first_name
+        description: First name of the purchasing user.
+
+      - name: last_name
+        description: Last name of the purchasing user.
+
+      - name: email
+        description: Email of the purchasing user.
+
+      - name: phone_number
+        description: Phone number of the purchasing user.
+
+      - name: promo_id
+        description: If a promotion was used on this order, the promo ID. NULL if no promo was used.
+
+      - name: promo_discount_raw_usd
+        description: The number of dollars taken off the order total.
+
+      - name: used_promo
+        description: 1 if a Promo was used, 0 if not.
+
+      - name: promo_discount_perc_of_total
+        description: > 
+          Promotion discount converted to a percent of the total cost of the order.
+
+      - name: address_id
+      - name: address
+      - name: zipcode
+      - name: statecode
+      - name: country
+      - name: created_at_utc
+      - name: order_cost_usd
+      - name: shipping_cost_usd
+      - name: total_cost_usd
+      - name: shipping_cost_perc_of_total
+      - name: total_items
+      - name: unique_items
+      - name: avg_cost_per_item
+      - name: product_names_list
+      - name: tracking_id
+      - name: shipping_service
+      - name: estimated_delivery_at_utc
+      - name: delivered_at_utc
+      - name: order_status
+
+      - name: delivery_time_actual_days
+        description: Actual number of days between order being placed and order delivery.
+
+      - name: delivery_time_estimated_days
+        description: Expected number of days between order being placed and order delivery.
+
+      - name: delivery_estimate_diff_days
+        description: The estimated delivery date minus the actual date. If positive, delivery was ahead of schedule. If negative, delivery was late.
+
+      - name: delivery_was_late
+
+  - name: fact_address_orders
+    description: > 
+      Information about each address and the orders that have been sent to the address. Relevant because often addresses have been shipped to from multiple users. Useful for understanding shipping delays. 
+
   - name: fact_user_orders

@@ -2,6 +2,6 @@ version: 2
 
 models:
 
-  - name: fact_user_sessions
+  - name: fact_sessions
   - name: fact_events
   
