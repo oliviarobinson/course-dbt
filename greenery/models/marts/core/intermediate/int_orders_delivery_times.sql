@@ -7,7 +7,7 @@ with orders as (
 , time_calcs as (
 
   select 
-    orders.*
+    orders.order_id
 
     -- calculations for delivery timing 
     , {{ dbt_utils.datediff('created_at_utc', 'delivered_at_utc', 'day') }} 

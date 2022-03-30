@@ -8,7 +8,7 @@ with promos as (
 , orders as (
 
   select *
-  from {{ ref('fact_orders') }}
+  from {{ ref('int_orders') }}
   where promo_id is not null 
 
 ) 

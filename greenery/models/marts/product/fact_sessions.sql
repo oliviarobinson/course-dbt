@@ -1,7 +1,7 @@
 {% 
   set event_types = 
     dbt_utils.get_column_values(
-      table=ref('fact_events'),
+      table=ref('stg_events'),
       column='event_type'
     ) 
 %}
@@ -9,7 +9,7 @@
 with events as (
 
   select *
-  from {{ ref('fact_events') }}
+  from {{ ref('stg_events') }}
 )
 
 select 
