@@ -1,4 +1,4 @@
-{% macro grant(role) %}
+{% macro grant_role(role) %}
 
     {% set sql %}
       GRANT SELECT ON {{ this }} TO {{ role }};

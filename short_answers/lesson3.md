@@ -84,6 +84,14 @@ Show (using dbt docs and the model DAGs) how you have simplified or improved a D
 
 ### What was most challenging/surprising in completing this week’s project?
 
+As my DAG got larger, it was harder to for me to remember which models to rely on when creating new models, such as `fact_session_products` that I used to answer the product level conversion questions. 
+
 ### Is there anywhere you are still stuck or confused? Or is there a particular part of the project where you want focused feedback from your reviewers?
 
+* I created some singular tests, but the tests now show up as models in my dag. Is that supposed to happen? If not, how do I fix it? The tests are regular sql files with no jinja decorators, in the `tests/` directory. 
+* Are intermediate models allowed to rely on each other?
+* Otherwise, things make sense, though I wish I could have had more time to dive in on potential macros and hook operations. 
+
 ### What are you most proud of about your project?
+
+I was able to create macros and tests that work together, so that the test confirms the data will enter the macro and return as expected. Also just continuing to push through and complete week 3 -- thanks to all the corise staff for the continued encouragement!

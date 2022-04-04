@@ -16,12 +16,11 @@ with events as (
       session_id
       , user_id
       , product_id
-      , product_name
       , max(order_id) as order_id
       , {{ agg_event_types() }} 
     from events
     where product_id is not null
-    {{ dbt_utils.group_by(n=4) }}
+    {{ dbt_utils.group_by(n=3) }}
 )
 
 , session_orders as (
@@ -30,7 +29,7 @@ with events as (
     sessions.session_id
     , sessions.user_id
     , sessions.product_id
-    , sessions.product_name
+    , purchase_events.product_name
     , purchase_events.order_id
     , sessions.has_page_view
     , sessions.has_add_to_cart

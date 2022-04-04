@@ -7,3 +7,6 @@ macros:
   - name: grant_role 
     description: > 
       Take one argument, "role", and grants usage and select on the current schema.  
+  - name: agg_order_items
+    description: > 
+      Generates SQL code to create a CTE that aggregates order items 

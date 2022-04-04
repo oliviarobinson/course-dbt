@@ -10,6 +10,7 @@ with events as (
   from {{ ref('stg_products') }}
 )
 
+
 select 
   event_id
   , session_id

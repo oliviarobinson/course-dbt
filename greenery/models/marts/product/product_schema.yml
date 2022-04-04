@@ -2,12 +2,9 @@ version: 2
 
 models:
 
-  - name: int_session 
+  - name: int_events 
+  - name: int_purchase_events
   
   - name: fact_sessions
-  - name: fact_events
-
-  # - name: fact_session_pageviews
-  # - name: fact_session_orders
   - name: fact_session_products
   

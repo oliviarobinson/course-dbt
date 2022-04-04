@@ -7,8 +7,8 @@ with orders as (
 , time_calcs as (
 
   select 
-    orders.order_id
-
+    orders.*
+    
     -- calculations for delivery timing 
     , {{ dbt_utils.datediff('created_at_utc', 'delivered_at_utc', 'day') }} 
         as delivery_time_actual_days
