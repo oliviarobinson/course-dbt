@@ -10,23 +10,23 @@ select
   , zipcode
   , statecode
   , country
-  , count(distinct user_id) as num_users_associated
-  , count(distinct order_id) as num_orders_associated
+  , count(distinct user_id) as n_users_associated
+  , count(distinct order_id) as n_orders_associated
   , min(created_at_utc) as first_order_date
   , max(created_at_utc) as latest_order_date
   , sum(
       case when order_status = 'preparing' 
       then 1 else 0 end 
-    ) as num_orders_in_prep
+    ) as n_orders_in_prep
   , sum(
       case when order_status = 'shipped' 
       then 1 else 0 
       end 
-    ) as num_orders_in_flight
+    ) as n_orders_in_flight
   , round(
       avg(delivery_time_actual_days), 2
     ) as avg_time_to_delivery_days
-  , sum(delivery_was_late) as num_orders_delivered_late
+  , sum(delivery_was_late) as n_orders_delivered_late
   , round(
       avg(delivery_was_late), 2
     ) as perc_orders_delivered_late

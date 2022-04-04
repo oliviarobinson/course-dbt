@@ -1,19 +1,13 @@
 with orders as (
 
   select *
-  from {{ ref('stg_orders') }}
+  from {{ ref('int_orders_delivery_times') }}
 ) 
 
 , order_items as (
 
   select *
   from {{ ref('int_order_items') }}
-)
-
-, delivery as (
-
-  select *
-  from {{ ref('int_orders_delivery_times') }}
 )
 
 , users as (
@@ -32,23 +26,6 @@ with orders as (
 
   select *
   from {{ ref('stg_addresses') }}
-)
-
-, order_items_agg as (
-
-  select 
-    orders.order_id
-    -- items ordered 
-    , sum(order_items.quantity) as total_items 
-    , count(distinct order_items.order_item_id) as unique_items
-    , max(orders.total_cost_usd::decimal) / 
-        sum(order_items.quantity) as avg_cost_per_item
-    , string_agg(product_name, ', ' order by product_name asc) 
-        as product_names_list
-  from orders
-  left join order_items 
-    on orders.order_id = order_items.order_id 
-  group by 1
 )
 
 , add_info as (
@@ -84,30 +61,18 @@ with orders as (
     , total_cost_usd
     , shipping_cost_usd / total_cost_usd as shipping_cost_perc_of_total
 
-    -- stats on items ordered
-    , order_items_agg.total_items
-    , order_items_agg.unique_items
-    , order_items_agg.avg_cost_per_item
-    , order_items_agg.product_names_list
-
     -- shipping info 
     , tracking_id
     , shipping_service
     , estimated_delivery_at_utc
     , delivered_at_utc
     , order_status 
-    , delivery.delivery_time_actual_days
-    , delivery.delivery_time_estimated_days
-    , delivery.delivery_estimate_diff_days
-    , delivery.delivery_was_late
+    , delivery_time_actual_days
+    , delivery_time_estimated_days
+    , delivery_estimate_diff_days
+    , delivery_was_late
 
   from orders 
-
-  -- join in intermediate models
-  left join order_items_agg 
-    on orders.order_id = order_items_agg.order_id
-  left join delivery
-    on orders.order_id = delivery.order_id
 
   -- join in staging models
   left join users 
