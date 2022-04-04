@@ -1,11 +1,3 @@
-{% 
-  set event_types = 
-    dbt_utils.get_column_values(
-      table=ref('stg_events'),
-      column='event_type'
-    ) 
-%}
-
 with events as (
 
   select *
@@ -26,14 +18,8 @@ with events as (
 
     , count(distinct event_id) as n_events
 
-    {% for event_type in event_types %}
-
-    , sum(
-        case when event_type = '{{ event_type }}' 
-        then 1 else 0 end
-      ) as n_{{ dbt_utils.slugify(event_type) }}
-
-    {% endfor %}
+    -- macro to aggregate event types
+    , {{ agg_event_types() }} 
 
   from events 
   group by 1, 2
