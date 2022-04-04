@@ -58,6 +58,7 @@ A question to think about: Why might certain products be converting at higher/lo
 ## Part 2: Macros
 
 * I created the macro to aggregate event types by session (or other grouping). I called it `agg_event_types` and I documented the macro in `macros/macros.yml`.
+* I also created a macro that aggregates items ordered and calculates average cost and other stats. 
 
 ## Part 3: Granting Permissions
 
@@ -70,7 +71,7 @@ A question to think about: Why might certain products be converting at higher/lo
 
 ## Part 5: Updated DAGs
 
-Show (using dbt docs and the model DAGs) how you have simplified or improved a DAG using macros and/or dbt packages.
+I created a new macro for calculating/ aggregating info about `order_items`, which I used to change the DAG flow of my `fact_orders` table to be more sensible. I also cleaned up some of my other code, but to be honest I wasn't sure how else I could simplify. 
 
 ## Reflection Questions 
 
