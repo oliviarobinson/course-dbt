@@ -1,7 +1,7 @@
 with events as (
 
   select *
-  from {{ ref('stg_events') }}
+  from {{ ref('int_events') }}
 )
 
 , sessions as (
@@ -26,7 +26,8 @@ with events as (
 )
 
 select * 
-  , {{ dbt_utils.datediff('first_action_time', 'latest_action_time', 'minute') }} 
-      as session_length_mins
+  , {{ dbt_utils.datediff(
+      'first_action_time', 'latest_action_time', 'minute')
+    }} as session_length_mins
 
 from sessions 
