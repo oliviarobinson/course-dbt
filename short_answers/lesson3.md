@@ -57,39 +57,33 @@ A question to think about: Why might certain products be converting at higher/lo
 
 ## Part 2: Macros
 
-Create a macro to simplify part of a model(s). Think about what would improve the usability or modularity of your code by applying a macro. Large case statements, or blocks of SQL that are often repeated make great candidates. Document the macro(s) using a .yml file in the macros directory.
-
-Note: One potential macro in our data set is aggregating event types per session. Start here as your first macro and add other macros if you want to go further.
+* I created the macro to aggregate event types by session (or other grouping). I called it `agg_event_types` and I documented the macro in `macros/macros.yml`.
 
 ## Part 3: Granting Permissions
 
-Add a post hook to your project to apply grants to the role “reporting”. Create reporting role first by running CREATE ROLE reporting in your database instance.
-
-NOTE: After you create the role you still need to grant it usage access on your schema dbt_<firstname>_<lastinitial> (what you set in your profiles.yml in week 1) which can be done using on-run-end
-
-HINT: you can use the grant macro example from this week and make any necessary changes for postgres syntax
+* Created the reporting role and added the macro `grant_role` to the post-hook. 
 
 ## Part 4:  Packages
 
-Install a package (i.e. dbt-utils, dbt-expectations) and apply one or more of the macros to your project
+* I've used several macros from dbt-utils in my project, including `dbt_utils.group_by`, `dbt_utils.datediff`, `dbt_utils.star`. 
+* I also used the `codegen` package to create some documentation. 
 
 ## Part 5: Updated DAGs
 
 Show (using dbt docs and the model DAGs) how you have simplified or improved a DAG using macros and/or dbt packages.
 
-
 ## Reflection Questions 
 
-* Part 1: Were you able to create new models to answer the data questions on conversion rate? Y/N
+* Part 1: Were you able to create new models to answer the data questions on conversion rate? **Yes**
 
-* Part 2: Were you able to add a new macro to your dbt project? Y/N (indicate if you used a macro to aggregate event types per session or something else)
+* Part 2: Were you able to add a new macro to your dbt project? **Yes**
 
-* Part 3: Were you able to add a post hook to your project to apply grants to the role “reporting”? Y/N
+* Part 3: Were you able to add a post hook to your project to apply grants to the role “reporting”? **Yes**
 
-* Part 4: Were you able to install a package? Y/N (indicate what package you used)
+* Part 4: Were you able to install a package? **Yes**, `codegen` and `dbt_utils`.
 
 ### What was most challenging/surprising in completing this week’s project?
 
-### Is there anywhere you are still stuck or confused? Or Is there a particular part of the project where you want focused feedback from your reviewers?
+### Is there anywhere you are still stuck or confused? Or is there a particular part of the project where you want focused feedback from your reviewers?
 
 ### What are you most proud of about your project?

@@ -4,3 +4,6 @@ macros:
   - name: agg_event_types
     description: > 
       For a fixed list of event types, creates one column per event type to show whether that event occured during a session (or another grouping unit). Take no arguments. 
+  - name: grant_role 
+    description: > 
+      Take one argument, "role", and grants usage and select on the current schema.  
