@@ -1,0 +1,14 @@
+version: 2
+
+exposures: 
+
+  - name: Product Funnel Dashboard
+    description: >
+      Models that are critical to our product funnel dashboard
+    type: dashboard
+    maturity: low
+    owner:
+      name: Olivia Robinson
+      email: olivia@example.com
+    depends_on:
+      - ref('fact_sessions')

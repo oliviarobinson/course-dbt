@@ -1,33 +1,18 @@
-with events as (
+with sessions as (
 
   select *
-  from {{ ref('int_events') }}
+  from {{ ref('int_sessions') }}
 )
 
-, sessions as (
+, date_info as (
 
   select 
-    session_id
-    , user_id
-    , min(created_at_utc) as first_action_time
-    , max(created_at_utc) as latest_action_time
-
-    -- if there was an order, include the order id
-    -- we have a test to check that no sessions include multiple orders
-    , max(order_id) as order_id 
-
-    , count(distinct event_id) as n_events
-
-    -- macro to aggregate event types
-    , {{ agg_event_types() }} 
-
-  from events 
-  group by 1, 2
+    sessions.*
+    , {{ dbt_date.month_name("first_action_time") }} as month_short_name
+    , {{ dbt_date.day_name("first_action_time") }} as day_of_week_short_name
+    , {{ dbt_date.week_start("first_action_time") }} as week_start
+  from sessions
 )
 
 select * 
-  , {{ dbt_utils.datediff(
-      'first_action_time', 'latest_action_time', 'minute')
-    }} as session_length_mins
-
-from sessions 
+from date_info
